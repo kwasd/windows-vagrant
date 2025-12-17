@@ -47,7 +47,7 @@ variable "vagrant_box" {
   type = string
 }
 
-source "qemu" "windows-11-24h2-uefi-amd64" {
+source "qemu" "windows-11-25h2-uefi-amd64" {
   accelerator  = "kvm"
   machine_type = "q35"
   cpus         = 2
@@ -99,7 +99,7 @@ source "qemu" "windows-11-24h2-uefi-amd64" {
     "provision-psremoting.ps1",
     "provision-pwsh.ps1",
     "provision-winrm.ps1",
-    "tmp/windows-11-24h2-uefi/autounattend.xml",
+    "tmp/windows-11-25h2-uefi/autounattend.xml",
   ]
   format                   = "qcow2"
   headless                 = true
@@ -115,8 +115,8 @@ source "qemu" "windows-11-24h2-uefi-amd64" {
   ssh_file_transfer_method = "sftp"
 }
 
-source "proxmox-iso" "windows-11-24h2-uefi-amd64" {
-  template_name            = "template-windows-11-24h2-uefi"
+source "proxmox-iso" "windows-11-25h2-uefi-amd64" {
+  template_name            = "template-windows-11-25h2-uefi"
   template_description     = <<-EOS
                               See https://github.com/rgl/windows-vagrant
 
@@ -124,7 +124,7 @@ source "proxmox-iso" "windows-11-24h2-uefi-amd64" {
                               Build At: ${timestamp()}
                               ```
                               EOS
-  tags                     = "windows-11-24h2-uefi;template"
+  tags                     = "windows-11-25h2-uefi;template"
   insecure_skip_tls_verify = true
   node                     = var.proxmox_node
   machine                  = "q35"
@@ -190,7 +190,7 @@ source "proxmox-iso" "windows-11-24h2-uefi-amd64" {
       "provision-psremoting.ps1",
       "provision-pwsh.ps1",
       "provision-winrm.ps1",
-      "tmp/windows-11-24h2-uefi/autounattend.xml",
+      "tmp/windows-11-25h2-uefi/autounattend.xml",
     ]
   }
   boot_wait      = "1s"
@@ -204,8 +204,8 @@ source "proxmox-iso" "windows-11-24h2-uefi-amd64" {
 
 build {
   sources = [
-    "source.qemu.windows-11-24h2-uefi-amd64",
-    "source.proxmox-iso.windows-11-24h2-uefi-amd64",
+    "source.qemu.windows-11-25h2-uefi-amd64",
+    "source.proxmox-iso.windows-11-25h2-uefi-amd64",
   ]
 
   provisioner "powershell" {
@@ -270,7 +270,7 @@ build {
   }
 
   post-processor "vagrant" {
-    except               = ["proxmox-iso.windows-11-24h2-uefi-amd64"]
+    except               = ["proxmox-iso.windows-11-25h2-uefi-amd64"]
     output               = var.vagrant_box
     vagrantfile_template = "Vagrantfile-uefi.template"
   }

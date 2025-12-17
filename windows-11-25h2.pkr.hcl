@@ -62,7 +62,7 @@ variable "vagrant_box" {
   type = string
 }
 
-source "qemu" "windows-11-24h2-amd64" {
+source "qemu" "windows-11-25h2-amd64" {
   accelerator  = "kvm"
   machine_type = "q35"
   cpus         = 2
@@ -111,7 +111,7 @@ source "qemu" "windows-11-24h2-amd64" {
     "provision-psremoting.ps1",
     "provision-pwsh.ps1",
     "provision-winrm.ps1",
-    "tmp/windows-11-24h2/autounattend.xml",
+    "tmp/windows-11-25h2/autounattend.xml",
   ]
   format                   = "qcow2"
   headless                 = true
@@ -127,8 +127,8 @@ source "qemu" "windows-11-24h2-amd64" {
   ssh_file_transfer_method = "sftp"
 }
 
-source "proxmox-iso" "windows-11-24h2-amd64" {
-  template_name            = "template-windows-11-24h2"
+source "proxmox-iso" "windows-11-25h2-amd64" {
+  template_name            = "template-windows-11-25h2"
   template_description     = <<-EOS
                               See https://github.com/rgl/windows-vagrant
 
@@ -136,7 +136,7 @@ source "proxmox-iso" "windows-11-24h2-amd64" {
                               Build At: ${timestamp()}
                               ```
                               EOS
-  tags                     = "windows-11-24h2;template"
+  tags                     = "windows-11-25h2;template"
   insecure_skip_tls_verify = true
   node                     = var.proxmox_node
   machine                  = "q35"
@@ -198,7 +198,7 @@ source "proxmox-iso" "windows-11-24h2-amd64" {
       "provision-psremoting.ps1",
       "provision-pwsh.ps1",
       "provision-winrm.ps1",
-      "tmp/windows-11-24h2/autounattend.xml",
+      "tmp/windows-11-25h2/autounattend.xml",
     ]
   }
   os             = "win11"
@@ -209,7 +209,7 @@ source "proxmox-iso" "windows-11-24h2-amd64" {
   boot_wait      = "30s"
 }
 
-source "hyperv-iso" "windows-11-24h2-amd64" {
+source "hyperv-iso" "windows-11-25h2-amd64" {
   cpus         = 2
   memory       = 4096
   generation   = 2
@@ -223,7 +223,7 @@ source "hyperv-iso" "windows-11-24h2-amd64" {
     "provision-psremoting.ps1",
     "provision-pwsh.ps1",
     "provision-winrm.ps1",
-    "tmp/windows-11-24h2-uefi/autounattend.xml",
+    "tmp/windows-11-25h2-uefi/autounattend.xml",
   ]
   disk_size                = var.disk_size
   first_boot_device        = "DVD"
@@ -243,9 +243,9 @@ source "hyperv-iso" "windows-11-24h2-amd64" {
 
 build {
   sources = [
-    "source.qemu.windows-11-24h2-amd64",
-    "source.proxmox-iso.windows-11-24h2-amd64",
-    "source.hyperv-iso.windows-11-24h2-amd64",
+    "source.qemu.windows-11-25h2-amd64",
+    "source.proxmox-iso.windows-11-25h2-amd64",
+    "source.hyperv-iso.windows-11-25h2-amd64",
   ]
 
   provisioner "powershell" {
@@ -310,7 +310,7 @@ build {
   }
 
   post-processor "vagrant" {
-    except               = ["proxmox-iso.windows-11-24h2-amd64"]
+    except               = ["proxmox-iso.windows-11-25h2-amd64"]
     output               = var.vagrant_box
     vagrantfile_template = "Vagrantfile.template"
   }
